@@ -6,7 +6,7 @@ const thoughtController = {
       const thoughts = await Thought.find({});
       res.json(thoughts);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(400).json(err);
     }
   },
@@ -26,7 +26,7 @@ const thoughtController = {
       }
       res.json(thought);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(400).json(err);
     }
   },
@@ -47,7 +47,7 @@ const thoughtController = {
       );
       res.json(newThought);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -95,9 +95,44 @@ const thoughtController = {
       )
       res.json(thoughtToRemove);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(500).json(err);
     }
+  },
+
+  async createReaction(req, res) {
+    try {
+      const thoughtToReactTo = await Thought.findOne({ _id: req.params.id});
+      if (!thoughtToReactTo) {
+        res.status(404).json({
+          message: 'Thought not found.',
+        })
+      }
+      thoughtToReactTo.reactions.push(req.body);
+      res.json(thoughtToReactTo);
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
+
+  async deleteReaction(req, res) {
+    try {
+      const thoughtToRemoveReactionFrom = await Thought.findOne({ _id: req.params.id});
+      if (!thoughtToReactTo) {
+        res.status(404).json({
+          message: 'Thought not found.',
+        })
+      }
+      thoughtToRemoveReactionFrom.reactions.id(req.body.reactionId).remove();
+      res.json(thoughtToReactTo);
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+
   },
 
 }

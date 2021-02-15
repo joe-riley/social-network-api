@@ -6,7 +6,7 @@ const userController = {
       const users = await User.find({});
       res.json(users);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(400).json(err);
     }
   },
@@ -26,7 +26,7 @@ const userController = {
       }
       res.json(user);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(400).json(err);
     }
   },
@@ -36,7 +36,7 @@ const userController = {
       const newUser = await User.create(req.body)
       res.json(newUser);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -76,7 +76,7 @@ const userController = {
       }
       res.json(userToRemove);
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(500).json(err);
     }
   },
