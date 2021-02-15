@@ -80,6 +80,48 @@ const userController = {
       res.status(500).json(err);
     }
   },
+
+  async addFriendToUser(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { 
+          _id: req.params.id,
+          friends: { $ne: req.params.friendId },
+        }, 
+        { $push : { friends: req.params.friendId }},
+        { 
+          new: true,
+          unique: true,
+        }
+      )
+      res.json({message: 'Friend added to user.'});
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
+
+  async deleteFriendFromUser(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { 
+          _id: req.params.id,
+          // friends: { $ne: req.params.friendId },
+        }, 
+        { $pull : { friends: req.params.friendId }},
+        { 
+          new: true,
+        }
+      )
+      res.json({message: 'Friend deletd from user.'});
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+
+  }
 }
 
 module.exports = userController;
