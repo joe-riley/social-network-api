@@ -15,14 +15,12 @@ const ThoughtSchema = new Schema({
     type: String,
     required: true,
   },
-  reactions: {
-    reactions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Reaction',
-      }
-    ]
-  },
+  reactions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Reaction',
+    }
+  ],
 })
 
 const Thought = model('Thought', ThoughtSchema);
